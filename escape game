@@ -1,0 +1,658 @@
+# make an empty list that will be used later for appending the lists of the rooms.
+room_list = []
+# make a list for each room index 0 is the name of the room, index 1 is the room to the north, index 2 is the room to the east
+# index 3 is the room to the south and index 4 is the room to the west. And appending the list to the empty list room_list
+# creating a 2D list
+# The first room, at index 0 of the 2D list room list
+room = ["Garage", 1, None, None, 3]
+room_list.append(room)
+# The second room, at index 1 of the 2D list room list
+room = ["Wine room", None, None, 0, 2]
+room_list.append(room)
+# The third room, at index 2 of the 2D list room list
+room = ["Guest Bedroom 1", None, 1, 3, 5]
+room_list.append(room)
+# The fourth room, at index 3 of the 2D list room list
+room = ["Guest Bedroom 2", 2, 0, None, 4]
+room_list.append(room)
+# The fifth room, at index 4 of the 2D list room list
+room = ["Theatre", 5, 3, None, 8]
+room_list.append(room)
+# The sixth room, at index 5 of the 2D list room list
+room = ["Kitchen", None, 2, 4, 6]
+room_list.append(room)
+# The seventh room, at index 6 of the 2D list room list
+room = ["Low North Hall", None, 5, 7, 11]
+room_list.append(room)
+# The eighth room, at index 7 of the 2D list room list
+room = ["Low Middle Hall", 6, None, 8, 10]
+room_list.append(room)
+# The ninth room, at index 8 of the 2D list room list
+room = ["Low South Hall", 7, 4, None, 9]
+room_list.append(room)
+# The tenth room, at index 9 of the 2D list room list
+room = ["Bathroom 1", 10, 8, None, None]
+room_list.append(room)
+# The eleventh room, at index 10 of the 2D list room list
+room = ["Dining Room", None, 7, 9, None]
+room_list.append(room)
+# The twelfth room, at index 11 of the 2D list room list
+room = ["Elevator to second floor", None, 17, None, None]
+room_list.append(room)
+# The thirteenth room, at index 12 of the 2D list room list
+room = ["Elevator to first floor", None, 6, None, None]
+room_list.append(room)
+# The fourteenth room, at index 13 of the 2D list room list
+room = ["Play room", None, 16, 14, None]
+room_list.append(room)
+# The fifteenth room, at index 14 of the 2D list room list
+room = ["Location of your mother", 13, 15, None, None]
+room_list.append(room)
+# The sixteenth room, at index 15 of the 2D list room list
+room = ["Up south hall", 16, 19, None, 14]
+room_list.append(room)
+# The seventeenth room, at index 16 of the 2D list room list
+room = ["Up middle hall", 17, None, 15, 13]
+room_list.append(room)
+# The eighteenth room, at index 17 of the 2D list room list
+room = ["Up North hall", None, 18, 16, 12]
+room_list.append(room)
+# The nineteenth room, at index 18 of the 2D list room list
+room = ["Storage room", None, 21, 19, 17]
+room_list.append(room)
+# The twentieth room, at index 19 of the 2D list room list
+room = ["Music room", 18, 20, None, 15]
+room_list.append(room)
+# The twenty one room, at index 20 of the 2D list room list
+room = ["Theatre", 21, 23, None, 19]
+room_list.append(room)
+# The twenty two room, at index 21 of the 2D list room list
+room = ["Location of your father", None, 22, 20, 18]
+room_list.append(room)
+# The twenty three room, at index 22 of the 2D list room list
+room = ["Master Bedroom", None, None, 23, 21]
+room_list.append(room)
+# The twenty four room, at index 23 of the 2D list room list
+room = ["Master Bathroom", 22, None, None, 20]
+room_list.append(room)
+
+
+# function that prints the introduction from adventure_file
+def print_from_file():
+    """
+
+    :return: prints the introduction paragraph after reading from adventure_file
+    """
+    # open the file in read mode
+    open_file = open("adventure_file", "r")
+    # create a variable sentences, that is an empty string
+    sentences = ""
+    # use a for loop to go through
+    for line in range(800):
+        sentences += open_file.read(line)
+    # print the introduction paragraph after reading from file
+    print(sentences)
+
+
+def play_game(current_room):
+    """
+    :param current_room: int: the room user is in, the index in list room_list
+    :return: current_room: the updated room the user is in
+    """
+    # format a sentence to let the user know which direction there is avaiable rooms
+    direction_statement = "You are in the room "
+    # add the room to the sentence by index the room name
+    direction_statement += str(room_list[current_room][0])
+    direction_statement += ". "
+    # use a for loop to go through the list index of current room in list room_list to determine where there is available rooms
+    for direction in range(len(room_list[current_room])):
+        # check to make sure the room is valid, if it is valid. Add the corresponding directions that correspond to the index to the sentence
+        if room_list[current_room][direction] is not None:
+            if direction == 1:
+                direction_statement += "There is a passage to the north. "
+            elif direction == 2:
+                direction_statement += "There is a passage to the east. "
+            elif direction == 3:
+                direction_statement += "There is a passage to the south. "
+            elif direction == 4:
+                direction_statement += "There is a passage to the west. "
+    # print the statement let user know where there is available room
+    print(direction_statement)
+    # user input which direction want to go next
+    next_direction = input("Please enter the direction you would like to move(north, east, south or west): ").lower()
+    # if the direction entered is north, update the current_room to the room north of the current_room
+    if next_direction == "north" or next_direction == "n":
+        next_room = room_list[current_room][1]
+        # if the user enters North but there is no north, output as print statement let user know
+        if next_room is None:
+            print("You can't go that way")
+        else:
+            current_room = next_room
+    # if the direction entered is east, update the current_room to the room east of the current_room
+    elif next_direction == "east" or next_direction == "e":
+        next_room = room_list[current_room][2]
+        # if the user enters east but there is no east, output as print statement let user know
+        if next_room is None:
+            print("you can't go that way")
+        else:
+            current_room = next_room
+    # if the direction entered is south based on the list, update the current_room to the room south of the current_room
+    elif next_direction == "south" or next_direction == "s":
+        next_room = room_list[current_room][3]
+        # if the user enters south but there is no south based on the list, output as print statement let user know
+        if next_room is None:
+            print("you can't go that way")
+        else:
+            current_room = next_room
+    # if the direction entered is west based on the lsit, update the current_room to the room west of the current_room
+    elif next_direction == "west" or next_direction == "w":
+        next_room = room_list[current_room][4]
+        if next_room is None:
+            print("you can't go that way")
+        # if the user enters west but there is no west based on the list, output as print statement let user know
+        else:
+            current_room = next_room
+    # if the input by the user is not yes or no. Print to let the user know the result
+    else:
+        print("Sorry, the direction you entered is not valid. As a result you will not move rooms")
+    # return the updated room the user is in
+    return current_room
+
+
+def games_in_room0():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 0
+    print("This is the garage. Where you started off. There are six luxurious cars here:)")
+
+
+def games_in_room1():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 1
+    # print statements to introduce the room
+    print("Welcome! Welcome! Welcome! You have entered the wine room!")
+    print("One of my favourite rooms in the house!")
+    print("You look closer, there is someone near the corner")
+    # user input if want to talk to the person
+    decision_talk = input("Would you like to have a conversation with this person?: ").lower()
+    # if user inputs yes, have the conversation
+    while decision_talk == "yes" or decision_talk == "y":
+        if decision_talk == "yes" or decision_talk == "y":
+            print("Hello, what brings you to the mansion today. Let me start by introducing myself")
+            print("My name is Agnes. And what is yours?")
+            user_name = input("Please enter your name here: ").lower()
+            print("Well hello ", user_name, "Thanks for stopping by at this mansion today.")
+            user_answer = input("There aren't many visitors. What brings you here today?: ")
+            print("Yes I understand your matter ", user_answer, "is very important. Good luck")
+            decision_talk = input("Would you like to have the same conversation with this person again?: ").lower()
+
+
+def games_in_room2():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 2
+    print("My best friend used to live in this guest bedroom!")
+
+
+def games_in_room3():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 3
+    # print statements to introduce the room
+    print("Welcome!! You have entered the Second Guest Bedroom. Also my favourite room in this mansion")
+    print("You look around there is nothing! But let's play a game first.")
+    print("Let me test your knowledge about how much you know about your mother")
+    print("The purpose of this mini game is that tests your knowledge about how old your mother is")
+    print("Now, I know you don't know much info. So let me give you a hint. The age is between 40-45")
+    # play a game of guessing the mother age, if guess is right, the passcode for the mother room will be given
+    done = False
+    while done is False:
+        # user input the guess, guess converted to int
+        guess_mother_age = int(input("Please enter your guess on how old your mother is: "))
+        if guess_mother_age == 40:
+            print("You have guessed it!! Your mother is 40 years old. How are you so smart and caring")
+            print("As a reward as I promised, I will provide you with the code to the room your mother is in")
+            print("The code is: 6451")
+            done = True
+        else:
+            print("KEEP GUESSING!!")
+
+
+def games_in_room4():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 4
+    # print statement to introduce the room
+    print("The theatre looks very fancy.")
+    # interactions with user to ask user if wish to watch a movie
+    watch_movie = input("Would you like to watch a movie?: ").lower()
+    if watch_movie == "yes" or watch_movie == "y":
+        print("Unfortunately, the only movie I have is cinderella because that's the only movie I like. SO ENJOYY")
+    elif watch_movie == "no" or watch_movie == "n":
+        print("That's alright. You can always come back anytime to watch a movie!!")
+    else:
+        print("please enter a valid response. yes or no")
+
+
+def games_in_room5():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 5
+    # print statement to introduce the room
+    print("This is the kitchen! You see a chef cooking something that smells really good")
+    # interaction with user input to determine if want to interact with chef and eat the food
+    approach = input("Would you like to approach the chef?: ").lower()
+    if approach == "yes" or approach == "y":
+        print("Hello, I see you've come to the kitchen! I cook here regularly")
+        want_eat = input("Would you like to try a meal that I cooked?: ").lower()
+        if want_eat == "yes" or want_eat == "y":
+            print("here is some of my lobster dish. Hope you enjoy and become full!!")
+        elif want_eat == "no" or want_eat == "n":
+            print("That's alright. You can come back anytime to have some food!!")
+        else:
+            print("Please enter a valid response. yes or no next time!! But for now since you didn't get valid response you don't get the dish")
+    elif approach == "no" or approach == "n":
+        print("No worries. You don't have to approach the chef if you are afraid:(")
+    else:
+        print("Please enter a valid response. yes or no next time you come back. for now, Iassume you mean no")
+
+
+def games_in_room6():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 6
+    print("This hall is very beautiful. You look up and see so many drawings and chandeliers")
+
+
+def games_in_room7():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 7
+    print("There are mirrors everywhere in this hall. You see a beautiful image of yourself")
+
+
+def games_in_room8():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 8
+    print("This hall may be the most worn down. This was because when the mansion was built not much design was put into this hall.")
+
+
+def games_in_room9():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 9
+    print("Bathrooms are pretty cool.")
+
+
+def games_in_room10():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 10
+    # print statement to introduce the room
+    print("This is the dining room.")
+    # user input if user wants to steal the purse in the dining room
+    steal_purse = input("Would you like to steal the purse?: ").lower()
+    if steal_purse == "yes" or steal_purse == "y":
+        print("Great! The purse is all yours! If you want to steal another purse come back later to see if someone has left another purse")
+    elif steal_purse == "no" or steal_purse == "n":
+        print("Great! Come back next time if you decide to steal the purse!")
+    else:
+        print("Please enter a valid response. yes or no. come back when you make a clear decision")
+
+
+def games_in_room11():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 11
+    print("You are now on the elevator that goes to the second floor! Hold on tight the ride may be long!!")
+
+
+def games_in_room12():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 12
+    print("You are now on the elevator that takes you back to the first floor!! Have fun!!")
+
+
+def games_in_room13():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 13
+    print("Play rooms are always fun:)")
+    # user input if user is enjoying game
+    like_game = input("Do you like playing games?: ").lower()
+    # print statement to let user know what they input is great
+    print("Great to hear!!", like_game, "Your response if very sweet!!")
+
+
+def games_in_room15():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 15
+    # user input to know if they are having good time exploring
+    time_exploring = input("Are you having a great time in my adventure right now?: ").lower()
+    # print what the user inputted is great
+    print("Great to hear! Good luck!! ", time_exploring, "is a very creative response.")
+
+
+def games_in_room16():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 16
+    # print statements to introduce the room
+    print("You are thinking why are there so many rooms and halls in this mansion..")
+    print("Then suddenly you think you are fainting, but a ghost is approaching you")
+    # user input if wish to talk to the ghost
+    ghost_talk = input("The ghost wants to talk to you. Would you like to talk to the ghost?: ").lower()
+    while ghost_talk == "yes":
+        # if user inputs yes, further conversation with ghost
+        if ghost_talk == "yes" or ghost_talk == "y":
+            print("Hello, I am the ghost, not many people approach me. But thanks for approaching me today!")
+            ghost_question = input("May I please ask you what brings you here today?: ").lower()
+            print("Oh I see", ghost_question, "is a very important matter for you")
+            print("But let me help you out! I will give you some clues. I have been walking around this mansion")
+            print("And trust me, your parents are both in the second floor.")
+        # if user enters no, let user know it is fine
+        elif ghost_talk == "no":
+            print("No worries, you can come back next time and see if the ghost is still here to talk to them")
+        # if response is invalid. not yes or no, let user know to input valid response
+        else:
+            print("Please enter a valid response. yes or no")
+            ghost_talk = input("Would you like to have the same conversation with the ghost again?: ").lower()
+
+
+def games_in_room17():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 17
+    print("You have already gone very far to end up in this hall!")
+
+
+def games_in_room18():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 18
+    # print statement to introduce the room
+    print("There is not much in this storage room. Just boxes and boxes everywhere.")
+    # user input if user likes boxes
+    like_box = input("Do you like boxes?: ").lower()
+    # print to let user know to have fun in the journey
+    print("Great to hear that you", like_box, "Have fun for the rest of your journey")
+
+
+def games_in_room19():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 19
+    # print statement to introduce the room
+    print("There are so many instruments everywhere in this music room!! Literally every instrument!")
+    # ask user what instrument would like to play
+    play_instrument = input("What instrument would you like to try playing right now?: ").lower()
+    # print statement to let user know to play the instrument they entered
+    print("Great to hear that you want to play the ", play_instrument, "Go try it out now!!")
+
+
+def games_in_room20():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 20
+    print("Unfortunately this theatre has no movies. But if you want to watch a movie. Go to the theatre located on the first floor!!")
+
+
+def games_in_room22():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 22
+    print("Master bedrooms are nice and big!!")
+    print("But look! You found a diamond ring that may be worth $100 000 000")
+    # user input if wish to steal the ring in the bedroom
+    steal_ring = input("You never stole anything in your life before. Would you like to steal the ring?: ").lower()
+    # if user enters yes, print the ring is theirs
+    if steal_ring == "yes" or steal_ring == "y":
+        print("Okay!! You are very brave! But no one is watching. And the ring will be a great present for you to give to your mother later on.")
+    # if user enters no, print can always come back
+    elif steal_ring == "no" or steal_ring == "n":
+        print("Okay!! If you decide to steal the ring, come back next time and hopefully the ring is still there for you")
+    else:
+        print("Come back next time and enter a valid response of yes or no")
+
+
+def games_in_room23():
+    """
+
+    :return: None
+    """
+    # the content if the room location is the room of index 23
+    # print statements to introduce the room
+    print("You enter the bathroom. Wow it is very big!!")
+    print("The mirror is speaking to you")
+    # user input to know if user wishes to talk to the mirror this is where the code for father room is found
+    speak_mirror = input("Would you like to speak with the mirror?: ").lower()
+    while speak_mirror == "yes" or speak_mirror == "y":
+        # if user inputs yes, print the father room code
+        if speak_mirror == "yes" or speak_mirror == "y":
+            print("Hello, you have found your last clue!! congrats for speaking with me, the mirror")
+            print("The code to the room your father is in is: 1872")
+        elif speak_mirror == "no" or speak_mirror == "n":
+            print("Come back next time!!")
+        # let user know their response is not valid. did not answer yes or no
+        else:
+            print("Please enter a valid response. yes or no")
+        # ask user input again if wish to talk to mirror again
+        speak_mirror = input("Would you like to have the same conversation with the mirror again?: ")
+
+
+# function that calls for the functions above that perform the game and regulate the game
+def main():
+    # ask user input if want to start from beginning or start from where last left off
+    new_game = input("Do you want to resume playing from where you left off last time? If this is your first time playing the game, please enter yes or no: ").lower()
+    # if user responds yes, open the values from save_progress file and assign to each variable
+    if new_game == "y" or new_game == "yes":
+        # open the file in read mode
+        open_progress = open("save_progress", "r")
+        # read the first line in the file and assign the value to the variable count
+        count = int(open_progress.read(1))
+        # read the second line in the file and assign the value to the variable rescue_dad
+        rescue_dad = int(open_progress.read(2))
+        # read the third line in the file and assign the value to the variable rescue_mom
+        rescue_mom = int(open_progress.read(3))
+        # read the fourth line in the file and assign the value to the variable current_room1
+        current_room1 = int(open_progress.read(4))
+    # if user inputs no, assign the variables all with 0 because in the beginning all variables are not updated yet
+    else:
+        count = 0
+        rescue_dad = 0
+        rescue_mom = 0
+        current_room1 = 0
+    print_from_file()
+    # set sentinel value done to False
+    done = False
+    # use a while loop to call the functions that contain the games in each room
+    while done is False:
+        # call the play_game function with the parameter of the current room and assign value to the variable room_now
+        room_now = play_game(current_room1)
+        # if the room user is in is 0 call the function games_in_room0() that contains the code for the game in the room and update the room user is in
+        if room_now == 0:
+            games_in_room0()
+            current_room1 = room_now
+        # if the room user is in is 1 call the function games_in_room1() that contains the code for the game in the room and update the room user is in
+        elif room_now == 1:
+            games_in_room1()
+            current_room1 = room_now
+        # if the room user is in is 2 call the function games_in_room2() that contains the code for the game in the room and update the room user is in
+        elif room_now == 2:
+            games_in_room2()
+            current_room1 = room_now
+        # if the room user is in is 3 call the function games_in_room3() that contains the code for the game in the room and update the room user is in
+        elif room_now == 3:
+            games_in_room3()
+            current_room1 = room_now
+        # if the room user is in is 4 call the function games_in_room4() that contains the code for the game in the room and update the room user is in
+        elif room_now == 4:
+            games_in_room4()
+            current_room1 = room_now
+        # if the room user is in is 5 call the function games_in_room5() that contains the code for the game in the room and update the room user is in
+        elif room_now == 5:
+            games_in_room5()
+            current_room1 = room_now
+        # if the room user is in is 6 call the function games_in_room6() that contains the code for the game in the room and update the room user is in
+        elif room_now == 6:
+            games_in_room6()
+            current_room1 = room_now
+        # if the room user is in is 7 call the function games_in_room7() that contains the code for the game in the room and update the room user is in
+        elif room_now == 7:
+            games_in_room7()
+            current_room1 = room_now
+        # if the room user is in is 8 call the function games_in_room8() that contains the code for the game in the room and update the room user is in
+        elif room_now == 8:
+            games_in_room8()
+            current_room1 = room_now
+        # if the room user is in is 9 call the function games_in_room9() that contains the code for the game in the room and update the room user is in
+        elif room_now == 9:
+            games_in_room9()
+            current_room1 = room_now
+        # if the room user is in is 10 call the function games_in_room10() that contains the code for the game in the room and update the room user is in
+        elif room_now == 10:
+            games_in_room10()
+            current_room1 = room_now
+        # if the room user is in is 11 call the function games_in_room11() that contains the code for the game in the room and update the room user is in
+        elif room_now == 11:
+            games_in_room11()
+            current_room1 = room_now
+        # if the room user is in is 12 call the function games_in_room12() that contains the code for the game in the room and update the room user is in
+        elif room_now == 12:
+            games_in_room12()
+            current_room1 = room_now
+        # if the room user is in is 13 call the function games_in_room13() that contains the code for the game in the room and update the room user is in
+        elif room_now == 13:
+            games_in_room13()
+            current_room1 = room_now
+        elif room_now == 14:
+            # the content if the room location is the room of index 14
+            print("You have reached the room your mother is in. ")
+            # ask user for the password to the room
+            mother_password = int(input("Please enter a four digit password with no spaces that match the code for this room: "))
+            # if user enters correct password, print to let them know
+            if mother_password == 6451:
+                print("Congrats!! YOU HAVE RESCUED YOUR MOTHER")
+                # update rescue variable add one
+                rescue_mom += 1
+            # if password is incorrect, let user know to enter again
+            else:
+                print("Sorry. That is not the right password. keep searching through the mansion to discover the password!!")
+        # if the room user is in is 15 call the function games_in_room15() that contains the code for the game in the room and update the room user is in
+        elif room_now == 15:
+            games_in_room15()
+            current_room1 = room_now
+        # if the room user is in is 16 call the function games_in_room16() that contains the code for the game in the room and update the room user is in
+        elif room_now == 16:
+            games_in_room16()
+            current_room1 = room_now
+        # if the room user is in is 17 call the function games_in_room17() that contains the code for the game in the room and update the room user is in
+        elif room_now == 17:
+            games_in_room17()
+            current_room1 = room_now
+        # if the room user is in is 18 call the function games_in_room18() that contains the code for the game in the room and update the room user is in
+        elif room_now == 18:
+            games_in_room18()
+            current_room1 = room_now
+        # if the room user is in is 19 call the function games_in_room19() that contains the code for the game in the room and update the room user is in
+        elif room_now == 19:
+            games_in_room19()
+            current_room1 = room_now
+        # if the room user is in is 20 call the function games_in_room20() that contains the code for the game in the room and update the room user is in
+        elif room_now == 20:
+            games_in_room20()
+            current_room1 = room_now
+        elif room_now == 21:
+            # the content if the room location is the room of index 21
+            father_password = input("This is your father's room. Please enter a four digit password with no spaces that match the code for your father's room: ")
+            if father_password == "1872":
+                print("Congrats!! You have rescued your father. You are very talented!! Hope you had fun along the way")
+                rescue_dad += 1
+            else:
+                print("Sorry. That is not the right password. Keep searching through the mansion to find the password!!")
+        # if the room user is in is 22 call the function games_in_room22() that contains the code for the game in the room and update the room user is in
+        elif room_now == 22:
+            games_in_room22()
+            current_room1 = room_now
+        # if the room user is in is 23 call the function games_in_room23() that contains the code for the game in the room and update the room user is in
+        elif room_now == 23:
+            games_in_room23()
+            current_room1 = room_now
+        # check if game is over, if user saved both parents already
+        if rescue_mom >= 1 and rescue_dad >= 1:
+            print("Congrats!! You have rescued both your parents!")
+            # break the while loop
+            break
+        # user input if wish to still continue the game
+        quit_game = input("would you still like to continue playing the game. It is very important for your rescue!!!: ").lower()
+        # if user inputs wish to continue game, update count variable
+        if quit_game == "yes" or quit_game == "y":
+            count += 1
+        elif quit_game == "no" or quit_game == "n":
+            # user input if wish to save progress
+            save_game = input("Would you like to save your progress of the game for next time?: ").lower()
+            # if user inputs yes, open the file in write mode and overwrite in file to update the variables
+            if save_game == "y" or "yes":
+                open_progress = open("save_progress", "w")
+                open_progress.write(str(count) + "\n")
+                open_progress.write(str(rescue_dad) + "\n")
+                open_progress.write(str(rescue_mom) + "\n")
+                open_progress.write(str(current_room1) + "\n")
+            # break while loop
+            break
+        else:
+            print("The response was not valid as a result you can play again!!!!:)")
+            count += 1
+        # if count variable already reached 100, user already has 100 tries, let user know game is voer
+        if count == 100:
+            print("Sorry, you are too slow, game is over!!")
+
+# call for the function main() to occur and game to start
+while True:
+    main()
